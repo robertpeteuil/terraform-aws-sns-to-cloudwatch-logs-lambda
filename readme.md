@@ -1,4 +1,6 @@
-# terraform-aws-sns-to-cloudwatch-logs-lambda [![Latest Release](https://img.shields.io/github/release/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda)[![license](https://img.shields.io/github/license/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg?colorB=2067b8)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda)
+# terraform-aws-sns-to-cloudwatch-logs-lambda
+
+[![Latest Release](https://img.shields.io/github/release/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda)[![license](https://img.shields.io/github/license/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg?colorB=2067b8)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda)
 
 `terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function that routes SNS messages to CloudWatch Logs
 
