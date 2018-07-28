@@ -23,7 +23,7 @@ output "iam_role_id_lambda" {
 }
 
 output "iam_role_arn_lambda" {
-  description = "Lambda IAM Role ID."
+  description = "Lambda IAM Role ARN."
   value       = "${aws_iam_role.lambda_cloudwatch_logs.arn}"
 }
 
