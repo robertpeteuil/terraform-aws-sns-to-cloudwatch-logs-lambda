@@ -1,16 +1,25 @@
-# AWS SNS to CloudWatch Logs Lambda Function - Terraform Module
+# terraform-aws-sns-to-cloudwatch-logs-lambda [![Latest Release](https://img.shields.io/github/release/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda)[![license](https://img.shields.io/github/license/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg?colorB=2067b8)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda)
 
-Terraform Module to provision a Lambda Function that routes SNS messages to CloudWatch Logs.
+`terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function that routes SNS messages to CloudWatch Logs
 
-## Features
+## Terraform Module Features
 
-Lambda Function forwards subject & body text of SNS messages to CloudWatch Log Group/Stream.
+Terraform Module allows simple and rapid deployment
 
-- Create Lambda function, IAM Permissions, Triggers, and Subscriptions
-- Create or use existing SNS Topic, CloudWatch Log Group and Log Group Stream
+- Creates Lambda function, IAM Policies, Triggers, and Subscriptions
+- Creates (or use existing) SNS Topic, CloudWatch Log Group and Log Group Stream
 - Options:
   - Create CloudWatch Event to prevent Function hibernation
   - Set Log Group retention period
+
+## SNS to CloudWatch Logs Features
+
+Lambda Function forwards subject & body of SNS messages to CloudWatch Log Group Stream
+
+- Enhance the value of CloudWatch Logs by allowing entry creation from virtually any service, notification or script
+- Enable cloud-init, bootstraps and functions to easily write entries to CloudWatch Logs
+- Easily add instrumentation to shell-scripts: `aws sns publish --topic-arn $TOPIC_ARN --message $LOG_ENTRY`
+- Troubleshoot script, function and service spread across resources
 
 ## Usage
 
@@ -49,4 +58,3 @@ module "sns_gw" {
 | create_warmer_event | Determines if CloudWatch trigger event created | string | `false` | no |
 | lambda_timeout | Seconds the function can run before timing out | string | `3` | no |
 | lambda_mem_size | RAM assigned to the function (in MB) | string | `128` | no |
-
