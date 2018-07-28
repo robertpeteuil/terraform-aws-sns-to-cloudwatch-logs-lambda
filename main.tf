@@ -9,9 +9,7 @@ terraform {
 
 # -------------------------------------------------------------------------------------------------------------
 # CREATE LAMBDA FUNCTION - SNS TO CLOUDWATCH LOGS GATEWAY 
-#   creates a new lambda function using default values unless overridden
-#   function uses environment variables for the log_group and log_stream used
-#     this enables easily chaning them without changing the function
+#   environment variables used for the log_group and log_stream so they aren't hardcoded into the function
 #   function can be published (versioned) by setting the optional lambda_publish_func flag
 # -------------------------------------------------------------------------------------------------------------
 
@@ -40,10 +38,9 @@ resource "aws_lambda_function" "sns_cloudwatchlog" {
 
 # -------------------------------------------------------------------------------------------------------------
 # SNS TOPIC
-#   creates a new topic if create_sns_topic == true
-#     else retrieves existing topic metadata
-#   uses required var "sns_topic_name"
-#   topic arn specified in "lambda_permssion" and "aws_sns_topic_subscription" 
+#   create new topic if create_sns_topic == true
+#     otherwise retrieve existing topic metadata
+#   topic arn used in "lambda_permssion" and "aws_sns_topic_subscription" 
 # -------------------------------------------------------------------------------------------------------------
 
 # create if specified
@@ -60,8 +57,7 @@ data "aws_sns_topic" "sns_log_topic" {
 
 # -------------------------------------------------------------------------------------------------------------
 # CLOUDWATCH LOG GROUP
-#   uses required var "log_group_name"
-#   creates a new log_group if create_log_group == true
+#   create new log_group if create_log_group == true
 # -------------------------------------------------------------------------------------------------------------
 
 resource "aws_cloudwatch_log_group" "sns_logged_item_group" {
@@ -72,7 +68,6 @@ resource "aws_cloudwatch_log_group" "sns_logged_item_group" {
 
 # -------------------------------------------------------------------------------------------------------------
 # CLOUDWATCH LOG STREAM IF create_log_stream == true
-#   uses required var "log_stream_name"
 #   stream created in log_group specified or created
 # -------------------------------------------------------------------------------------------------------------
 
@@ -84,7 +79,7 @@ resource "aws_cloudwatch_log_stream" "sns_logged_item_stream" {
 
 # -------------------------------------------------------------------------------------------------------------
 # SUBSCRIBE LAMBDA FUNCTION TO SNS TOPIC
-#   Lambda function subscribed to sns topic
+#   Lambda function subscription to sns topic
 # -------------------------------------------------------------------------------------------------------------
 
 resource "aws_sns_topic_subscription" "lambda" {
@@ -95,7 +90,7 @@ resource "aws_sns_topic_subscription" "lambda" {
 
 # -------------------------------------------------------------------------------------------------------------
 # ENABLE SNS TOPIC AS LAMBDA FUNCTION TRIGGER
-#   uses conditional resource blocks as condition parameters aren't possible until Terraform v0.12.0
+#   use multiple resource blocks as condition parameters aren't possible until Terraform v0.12.0
 # -------------------------------------------------------------------------------------------------------------
 
 # -----------------------------------------------------------------
@@ -125,7 +120,6 @@ resource "aws_lambda_permission" "sns_cloudwatchlog" {
 
 # -------------------------------------------------------------------------------------------------------------
 # CREATE IAM ROLE AND POLICIES FOR LAMBDA FUNCTION
-#   Add policy that to enable access to other AWS services
 # -------------------------------------------------------------------------------------------------------------
 
 # -----------------------------------------------------------------
@@ -137,7 +131,7 @@ resource "aws_iam_role" "lambda_cloudwatch_logs" {
 }
 
 # -----------------------------------------------------------------
-#   Add policy to role to enable access to other AWS services
+#   Add policy enabling access to other AWS services
 # -----------------------------------------------------------------
 resource "aws_iam_role_policy" "lambda_cloudwatch_logs_polcy" {
   name   = "lambda_${lower(var.lambda_func_name)}_policy"
@@ -160,7 +154,7 @@ data "aws_iam_policy_document" "lambda_cloudwatch_logs" {
 }
 
 # -----------------------------------------------------------------
-#   JSON POLICY - enables access to other AWS services
+#   JSON POLICY - enable access to other AWS services
 # -----------------------------------------------------------------
 data "aws_iam_policy_document" "lambda_cloudwatch_logs_policy" {
   statement {
@@ -176,8 +170,6 @@ data "aws_iam_policy_document" "lambda_cloudwatch_logs_policy" {
 
 # -------------------------------------------------------------------------------------------------------------
 # CREATE CLOUDWATCH TRIGGER EVENT TO PERIODICALLY CONTACT THE LAMBDA FUNCTION AND PREVENT IT FROM SUSPENDING
-#   create cloudwatch event to run every 15 minutes
-#   set event target as sns_to_cloudwatch_logs lambda function 
 # -------------------------------------------------------------------------------------------------------------
 
 # -----------------------------------------------------------------
@@ -212,8 +204,7 @@ JSON
 
 # -------------------------------------------------------------------------------------------------------------
 # ENABLE CLOUDWATCH EVENT AS LAMBDA FUNCTION TRIGGER
-#   Lambda function set to trigger on cloudwatch event
-#   uses conditional resource blocks as condition parameters aren't possible until Terraform v0.12.0
+#   use multiple resource blocks as condition parameters aren't possible until Terraform v0.12.0
 # -------------------------------------------------------------------------------------------------------------
 
 # -----------------------------------------------------------------
