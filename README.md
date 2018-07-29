@@ -28,7 +28,7 @@ Lambda Function forwards subject & body of SNS messages to CloudWatch Log Group 
 
 ``` ruby
 module "sns_gw" {
-  source            = "git::https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda?ref=tags/0.1.0"
+  source            = "git::https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda?ref=tags/0.2.0"
   aws_region        = "us-west-2"
   sns_topic_name    = "logging"
   log_group_name    = "project"
@@ -54,10 +54,11 @@ module "sns_gw" {
 | create_sns_topic | Create new SNS topic | string | `true` | no |
 | create_log_group | Create new log group | string | `true` | no |
 | create_log_stream | Create new log stream | string | `true` | no |
-| log_group_retention_days | Log Group retention (days) | string | `0 (forever)` | no |
+| log_group_retention_days | Log Group retention (days) | string | `0` (forever) | no |
 | lambda_func_name | Name for Lambda Function | string | `SNStoCloudWatchLogs` | no |
 | lambda_description | Lambda Function Description | string | `Route SNS messages to CloudWatch Logs` | no |
 | lambda_publish_func | Publish Lambda Function | string | `false` | no |
-| create_warmer_event | Create CloudWatch trigger event to prevent hibernation | string | `false` | no |
 | lambda_timeout | Function time-out (seconds) | string | `3` | no |
 | lambda_mem_size | Function RAM assigned (MB) | string | `128` | no |
+| create_warmer_event | Create CloudWatch trigger event to prevent hibernation | string | `false` | no |
+
