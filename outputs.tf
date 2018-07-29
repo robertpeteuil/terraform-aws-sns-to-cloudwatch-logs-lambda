@@ -9,12 +9,17 @@ output "lambda_name" {
 
 output "lambda_arn" {
   description = "ARN of created Lambda Function."
-  value       = "${aws_lambda_function.sns_cloudwatchlog.arn}"
+  value       = "${var.lambda_publish_func ? aws_lambda_function.sns_cloudwatchlog.qualified_arn  : aws_lambda_function.sns_cloudwatchlog.arn}"
 }
 
-output "lambda_endpoint" {
-  description = "Endpoint of created Lambda Function."
-  value       = "${var.lambda_publish_func ? aws_lambda_function.sns_cloudwatchlog.qualified_arn  : aws_lambda_function.sns_cloudwatchlog.arn}"
+output "lambda_version" {
+  description = "Latest published version of Lambda Function."
+  value       = "${aws_lambda_function.sns_cloudwatchlog.version}"
+}
+
+output "lambda_last_modified" {
+  description = "The date the Lambda Function was last modified."
+  value       = "${aws_lambda_function.sns_cloudwatchlog.last_modified}"
 }
 
 output "lambda_iam_role_id" {

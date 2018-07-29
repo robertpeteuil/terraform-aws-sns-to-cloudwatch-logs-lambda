@@ -6,7 +6,6 @@
 
 ## Terraform Module Features
 
-
 Terraform Module allows simple and rapid deployment
 
 - Creates Lambda function, IAM Policies, Triggers, and Subscriptions
