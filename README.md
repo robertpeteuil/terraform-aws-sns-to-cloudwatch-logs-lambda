@@ -4,17 +4,6 @@
 
 `terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function which routes SNS messages to CloudWatch Logs
 
-## SNS to CloudWatch Logs Features
-
-This Lambda Function forwards subject & body of SNS messages to the specified CloudWatch Log Group Stream
-
-- Enhances the value of CloudWatch Logs by enabling writing log entries from virtually any service, notification or script
-- Allows cloud-init, bootstraps and functions to easily write entries to CloudWatch Logs
-- Simplifies troubleshooting solutions with decentralized logic
-  - ex: scripts and functions spread across resources and services
-- Add instrumentation to shell-scripts: `aws sns publish --topic-arn $TOPIC_ARN --message $LOG_ENTRY`
-  - Use on instances with IAM instance policy may require `--region $AWS_REGION` parameter
-
 ## Terraform Module Features
 
 This Module allows simple and rapid deployment
@@ -24,6 +13,17 @@ This Module allows simple and rapid deployment
 - Options:
   - Create CloudWatch Event to prevent Function hibernation
   - Set Log Group retention period
+
+## SNS to CloudWatch Logs Features
+
+This Lambda Function forwards subject & body of SNS messages to CloudWatch Log Group Stream
+
+- Enhances the value of CloudWatch Logs by enabling on-demand entry creation from any service, function and script
+- Enables cloud-init, bootstraps and functions to easily write log entries to a centralized CloudWatch Log
+- Simplifies troubleshooting of solutions with decentralized logic
+  - scripts and functions spread across instances, Lambda and services
+- Easily add instrumentation to scripts: `aws sns publish --topic-arn $TOPIC_ARN --message $LOG_ENTRY`
+  - Use with IAM instance policy may require `--region $AWS_REGION` parameter
 
 ## Usage
 
