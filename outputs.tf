@@ -58,7 +58,7 @@ output "log_stream_name" {
 }
 
 output "log_stream_arn" {
-  description = "Name of CloudWatch Log Stream."
+  description = "ARN of CloudWatch Log Stream."
   value       = "${var.create_sns_topic ? join("", aws_sns_topic.sns_log_topic.*.arn) : join("", data.aws_sns_topic.sns_log_topic.*.arn)}"
 }
 
