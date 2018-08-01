@@ -2,11 +2,22 @@
 
 [![Latest Release](https://img.shields.io/github/release/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda) [![license](https://img.shields.io/github/license/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda.svg?colorB=2067b8)](https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda)
 
-`terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function that routes SNS messages to CloudWatch Logs
+`terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function which routes SNS messages to CloudWatch Logs
+
+## SNS to CloudWatch Logs Features
+
+This Lambda Function forwards subject & body of SNS messages to the specified CloudWatch Log Group Stream
+
+- Enhances the value of CloudWatch Logs by enabling writing log entries from virtually any service, notification or script
+- Allows cloud-init, bootstraps and functions to easily write entries to CloudWatch Logs
+- Simplifies troubleshooting solutions with decentralized logic
+  - ex: scripts and functions spread across resources and services
+- Add instrumentation to shell-scripts: `aws sns publish --topic-arn $TOPIC_ARN --message $LOG_ENTRY`
+  - Use on instances with IAM instance policy may require `--region $AWS_REGION` parameter
 
 ## Terraform Module Features
 
-Terraform Module allows simple and rapid deployment
+This Module allows simple and rapid deployment
 
 - Creates Lambda function, IAM Policies, Triggers, and Subscriptions
 - Creates (or use existing) SNS Topic, CloudWatch Log Group and Log Group Stream
@@ -14,24 +25,15 @@ Terraform Module allows simple and rapid deployment
   - Create CloudWatch Event to prevent Function hibernation
   - Set Log Group retention period
 
-## SNS to CloudWatch Logs Features
-
-Lambda Function forwards subject & body of SNS messages to CloudWatch Log Group Stream
-
-- Enhance the value of CloudWatch Logs by allowing entry creation from virtually any service, notification or script
-- Enable cloud-init, bootstraps and functions to easily write entries to CloudWatch Logs
-- Easily add instrumentation to shell-scripts: `aws sns publish --topic-arn $TOPIC_ARN --message $LOG_ENTRY`
-- Troubleshoot script, function and service spread across resources
-
 ## Usage
 
 ``` ruby
-module "sns_gw" {
+module "sns_logger" {
   source            = "git::https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda?ref=tags/0.2.0"
   aws_region        = "us-west-2"
-  sns_topic_name    = "logging"
-  log_group_name    = "project"
-  log_stream_name   = "snslogs"
+  sns_topic_name    = "projectx-logging"
+  log_group_name    = "projectx"
+  log_stream_name   = "script-logs"
 }
 ```
 
