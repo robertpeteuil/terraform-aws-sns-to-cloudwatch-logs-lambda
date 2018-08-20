@@ -29,7 +29,9 @@ This Lambda Function forwards subject & body of SNS messages to CloudWatch Log G
 
 ``` ruby
 module "sns_logger" {
-  source            = "git::https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda?ref=tags/0.2.0"
+  source            = "robertpeteuil/sns-to-cloudwatch-logs-lambda/aws"
+  version           = "0.2.3"
+
   aws_region        = "us-west-2"
   sns_topic_name    = "projectx-logging"
   log_group_name    = "projectx"
