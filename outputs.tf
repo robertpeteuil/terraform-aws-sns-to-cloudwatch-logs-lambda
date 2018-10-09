@@ -1,9 +1,9 @@
-# -------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------
 # AWS SNS TO CLOUDWATCH LOGS LAMBDA GATEWAY - OUTPUTS
-# -------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------
 
 output "lambda_name" {
-  description = "Name assigned to the Lambda Function."
+  description = "Name assigned to Lambda Function."
   value       = "${var.lambda_func_name}"
 }
 
@@ -18,7 +18,7 @@ output "lambda_version" {
 }
 
 output "lambda_last_modified" {
-  description = "The date the Lambda Function was last modified."
+  description = "The date Lambda Function was last modified."
   value       = "${aws_lambda_function.sns_cloudwatchlog.last_modified}"
 }
 

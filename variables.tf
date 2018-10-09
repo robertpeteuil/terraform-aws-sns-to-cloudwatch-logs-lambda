@@ -1,48 +1,46 @@
-# -------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------
 # REQUIRED VARIABLES WITHOUT DEFAULT VALUES
-# -------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------
 
 variable aws_region {
   type        = "string"
-  description = "Region where AWS resources will be created and used."
+  description = "Region where AWS resources will be created."
 }
 
 variable sns_topic_name {
   type        = "string"
-  description = "Name of SNS Topic to be logged to CloudWatch Logs."
+  description = "Name of SNS Topic logging to CloudWatch Log."
 }
 
 variable log_group_name {
   type        = "string"
-  description = "Name of CloudWatch Log Group to create or use."
+  description = "Name of CloudWatch Log Group created or used (if previously created)."
 }
 
 variable log_stream_name {
   type        = "string"
-  description = "Name of CloudWatch Log Stream to create or use.  If using an existing stream, it must exist in the Log group specified in 'log_group_name'."
+  description = "Name of CloudWatch Log Stream created or used (if previously created).  If using an existing stream it must exist in the Log group specified in 'log_group_name'."
 }
 
-# -------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------
 # VARIABLES DEFINITIONS WITH DEFAULT VALUES
-# -------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------
 
-# -----------------------------------------------------------------
-# SNS, LOG GROUP, LOG STREAM
-# -----------------------------------------------------------------
+# SNS TOPIC, LOG GROUP, LOG STREAM
 
 variable create_sns_topic {
   default     = true
-  description = "Boolean flag that determines if SNS topic: 'sns_topic_name' is created. If 'false' it uses an existing topic of that name."
+  description = "Boolean flag that determines if SNS topic, 'sns_topic_name' is created. If 'false' it uses an existing topic of that name."
 }
 
 variable create_log_group {
   default     = true
-  description = "Boolean flag that determines if log group: 'log_group_name' is created.  If 'false' it uses an existing group of that name."
+  description = "Boolean flag that determines if log group, 'log_group_name' is created.  If 'false' it uses an existing group of that name."
 }
 
 variable create_log_stream {
   default     = true
-  description = "Boolean flag that determines if log stream: 'log_stream_name' is created. If 'false' it uses an existing stream of that name."
+  description = "Boolean flag that determines if log stream, 'log_stream_name' is created. If 'false' it uses an existing stream of that name."
 }
 
 variable log_group_retention_days {
@@ -50,30 +48,28 @@ variable log_group_retention_days {
   description = "Number of days to retain data in the log group (0 = always retain)."
 }
 
-# -----------------------------------------------------------------
 # LAMBDA FUNCTION
-# -----------------------------------------------------------------
 
 variable lambda_func_name {
   type        = "string"
   default     = "SNStoCloudWatchLogs"
-  description = "Name to assign to the Lambda Function."
+  description = "Name to assign to Lambda Function."
 }
 
 variable lambda_description {
   type        = "string"
   default     = "Route SNS messages to CloudWatch Logs"
-  description = "Description to assign to the Lambda Function."
+  description = "Description to assign to Lambda Function."
 }
 
 variable lambda_publish_func {
   default     = false
-  description = "Boolean flag that determines if the Lambda function is published as a version."
+  description = "Boolean flag that determines if Lambda function is published as a version."
 }
 
 variable create_warmer_event {
   default     = false
-  description = "Boolean flag that determines if a CloudWatch Trigger event is created to prevent the Lambda function from suspending."
+  description = "Boolean flag that determines if a CloudWatch Trigger event is created to prevent Lambda function from suspending."
 }
 
 variable lambda_timeout {
