@@ -81,3 +81,8 @@ variable lambda_mem_size {
   default     = 128
   description = "Amount of RAM (in MB) assigned to the function. The default (and minimum) is 128MB, and the maximum is 3008MB."
 }
+
+variable "lambda_tags" {
+  description = "A mapping of tags to assign to Lambda Function."
+  default     = {}
+}

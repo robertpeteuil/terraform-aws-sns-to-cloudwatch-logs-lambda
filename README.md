@@ -30,7 +30,7 @@ This Lambda Function forwards subject & body of SNS messages to CloudWatch Log G
 ``` ruby
 module "sns_logger" {
   source            = "robertpeteuil/sns-to-cloudwatch-logs-lambda/aws"
-  version           = "0.2.5"
+  version           = "0.2.6"
 
   aws_region        = "us-west-2"
   sns_topic_name    = "projectx-logging"
@@ -60,8 +60,8 @@ module "sns_logger" {
 | log_group_retention_days | Log Group retention (days) | string | `0` (forever) | no |
 | lambda_func_name | Name for Lambda Function | string | `SNStoCloudWatchLogs` | no |
 | lambda_description | Lambda Function Description | string | `Route SNS messages to CloudWatch Logs` | no |
+| lambda_tags | Mapping of Tags to assign to Lambda function | map | `{}` | no |
 | lambda_publish_func | Publish Lambda Function | string | `false` | no |
 | lambda_timeout | Function time-out (seconds) | string | `3` | no |
 | lambda_mem_size | Function RAM assigned (MB) | string | `128` | no |
 | create_warmer_event | Create CloudWatch trigger event to prevent hibernation | string | `false` | no |
-

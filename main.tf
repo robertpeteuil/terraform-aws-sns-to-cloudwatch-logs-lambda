@@ -33,6 +33,8 @@ resource "aws_lambda_function" "sns_cloudwatchlog" {
       log_stream = "${var.log_stream_name}"
     }
   }
+
+  tags = "${var.lambda_tags}"
 }
 
 # -----------------------------------------------------------------
