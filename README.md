@@ -35,7 +35,7 @@ This Lambda Function forwards subject & body of SNS messages to CloudWatch Log G
 ``` ruby
 module "sns_logger" {
   source            = "robertpeteuil/sns-to-cloudwatch-logs-lambda/aws"
-  version           = "0.2.6"
+  version           = "1.0.0"
 
   aws_region        = "us-west-2"
   sns_topic_name    = "projectx-logging"
