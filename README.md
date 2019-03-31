@@ -14,9 +14,9 @@ This Module allows simple and rapid deployment
   - Create CloudWatch Event to prevent Function hibernation
   - Set Log Group retention period
 - Python function editable in repository and in Lambda UI
-  - Python dependancies packages in Lambda Layers zip
+  - Python dependencies packages in Lambda Layers zip
 - Optionally create custom Lambda Layer zip using [build-lambda-layer-python](https://github.com/robertpeteuil/build-lambda-layer-python)
-  - Enables adding/changing dependancies
+  - Enables adding/changing dependencies
   - Enables compiling for different version of Python
 
 ## SNS to CloudWatch Logs Features
