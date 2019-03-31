@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Python function editable in repository and in Lambda UI
 - Default Python version switched to 3.6
 - Add optional dynamically calculated function name based on topic and Cloudwatch Group/Stream
-- Optionally create custom Lambda Layer zip using [build-lambda-layer-python submodule](https://github.com/robertpeteuil/build-lambda-layer-python)
+- Optionally create custom Lambda Layer zip using [build-lambda-layer-python](https://github.com/robertpeteuil/build-lambda-layer-python)
   - Enables adding/changing dependencies
   - Enables compiling for different version of Python
 - Add new variable `lambda_runtime`
