@@ -63,7 +63,7 @@ module "sns_logger" {
 | create_log_group | Create new log group | string | `true` | no |
 | create_log_stream | Create new log stream | string | `true` | no |
 | log_group_retention_days | Log Group retention (days) | string | `0` (forever) | no |
-| lambda_func_name | Name for Lambda Function | string | `SNStoCloudWatchLogs` | no |
+| lambda_func_name | Name for Lambda Function | string | dynamically calculated | no |
 | lambda_description | Lambda Function Description | string | `Route SNS messages to CloudWatch Logs` | no |
 | lambda_tags | Mapping of Tags to assign to Lambda function | map | `{}` | no |
 | lambda_publish_func | Publish Lambda Function | string | `false` | no |
