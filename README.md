@@ -8,22 +8,27 @@
 
 This Module allows simple and rapid deployment
 
-- Creates Lambda function, IAM Policies, Triggers, and Subscriptions
+- Creates Lambda function, Lambda Layer, IAM Policies, Triggers, and Subscriptions
 - Creates (or use existing) SNS Topic, CloudWatch Log Group and Log Group Stream
 - Options:
   - Create CloudWatch Event to prevent Function hibernation
   - Set Log Group retention period
+- Python function editable in repository and in Lambda UI
+  - Python dependancies to Lambda Layers
+- Optionally create custom Lambda Layer zip using [build-lambda-layer-python submodule](https://github.com/robertpeteuil/build-lambda-layer-python)
+  - Enables adding/changing dependancies
+  - Enables compiling for different version of Python
 
 ## SNS to CloudWatch Logs Features
 
 This Lambda Function forwards subject & body of SNS messages to CloudWatch Log Group Stream
 
-- Enhances the value of CloudWatch Logs by enabling on-demand entry creation from any service, function and script
+- Enhances the value of CloudWatch Logs by enabling easy entry creation from any service, function and script that can send SNS notifications
 - Enables cloud-init, bootstraps and functions to easily write log entries to a centralized CloudWatch Log
 - Simplifies troubleshooting of solutions with decentralized logic
   - scripts and functions spread across instances, Lambda and services
 - Easily add instrumentation to scripts: `aws sns publish --topic-arn $TOPIC_ARN --message $LOG_ENTRY`
-  - Use with IAM instance policy may require `--region $AWS_REGION` parameter
+  - Use with IAM instance policy requires `--region $AWS_REGION` parameter
 
 ## Usage
 
@@ -62,6 +67,7 @@ module "sns_logger" {
 | lambda_description | Lambda Function Description | string | `Route SNS messages to CloudWatch Logs` | no |
 | lambda_tags | Mapping of Tags to assign to Lambda function | map | `{}` | no |
 | lambda_publish_func | Publish Lambda Function | string | `false` | no |
+| lambda_runtime | Lambda runtime for Function | string | `python3.6` | no |
 | lambda_timeout | Function time-out (seconds) | string | `3` | no |
 | lambda_mem_size | Function RAM assigned (MB) | string | `128` | no |
 | create_warmer_event | Create CloudWatch trigger event to prevent hibernation | string | `false` | no |
