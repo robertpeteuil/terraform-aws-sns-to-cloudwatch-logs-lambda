@@ -6,24 +6,54 @@ terraform {
   required_version = "~> 0.11.7"
 }
 
+provider "aws" {
+  region = "${var.aws_region}"
+}
+
 # -----------------------------------------------------------------
-# CREATE LAMBDA FUNCTION - SNS TO CLOUDWATCH LOGS GATEWAY 
-#   environment variables used for the 'log_group' and 'log_stream'
-#   function published if 'lambda_publish_func' set
+# CREATE LAMBDA BASE LAYER CONTAINING PYTHON LIBRARIES
 # -----------------------------------------------------------------
 
+resource "aws_lambda_layer_version" "logging_base" {
+  filename         = "${path.module}/base_${var.lambda_runtime}.zip"
+  source_code_hash = "${base64sha256(file("${path.module}/base_${var.lambda_runtime}.zip"))}"
+
+  layer_name  = "sns-cloudwatch-base-${replace(var.lambda_runtime,".","")}"
+  description = "python logging and watchtower libraries"
+
+  compatible_runtimes = ["${var.lambda_runtime}"]
+}
+
+# -----------------------------------------------------------------
+# CREATE LAMBDA FUNCTION USING ZIP FILE 
+# -----------------------------------------------------------------
+
+# make zip
+data "archive_file" "lambda_function" {
+  type        = "zip"
+  source_file = "${path.module}/function/sns_cloudwatch_gw.py"
+  output_path = "${path.module}/lambda.zip"
+}
+
+locals {
+  dynamic_description = "Routes SNS topic '${var.sns_topic_name}' to CloudWatch group '${var.log_group_name}' and stream '${var.log_stream_name}'"
+}
+
+# create lambda using function only zip on top of base layer
 resource "aws_lambda_function" "sns_cloudwatchlog" {
-  function_name = "${var.lambda_func_name}"
-  description   = "${var.lambda_description}"
+  layers = ["${aws_lambda_layer_version.logging_base.arn}"]
 
-  filename         = "${path.module}/source.zip"
-  source_code_hash = "${base64sha256(file("${path.module}/source.zip"))}"
+  function_name = "${var.lambda_func_name}-${var.sns_topic_name}"
+  description   = "${length(var.lambda_description) > 0 ? var.lambda_description : local.dynamic_description}"
+
+  filename         = "${path.module}/lambda.zip"
+  source_code_hash = "${data.archive_file.lambda_function.output_base64sha256}"
 
   publish = "${var.lambda_publish_func ? 1 : 0}"
   role    = "${aws_iam_role.lambda_cloudwatch_logs.arn}"
 
-  runtime     = "python2.7"
-  handler     = "lambda_function.lambda_handler"
+  runtime     = "${var.lambda_runtime}"
+  handler     = "sns_cloudwatch_gw.main"
   timeout     = "${var.lambda_timeout}"
   memory_size = "${var.lambda_mem_size}"
 
@@ -126,13 +156,13 @@ resource "aws_lambda_permission" "sns_cloudwatchlog" {
 
 # Create IAM role
 resource "aws_iam_role" "lambda_cloudwatch_logs" {
-  name               = "lambda_${lower(var.lambda_func_name)}"
+  name               = "lambda-${lower(var.lambda_func_name)}-${var.sns_topic_name}"
   assume_role_policy = "${data.aws_iam_policy_document.lambda_cloudwatch_logs.json}"
 }
 
 # Add base Lambda Execution policy
 resource "aws_iam_role_policy" "lambda_cloudwatch_logs_polcy" {
-  name   = "lambda_${lower(var.lambda_func_name)}_policy"
+  name   = "lambda-${lower(var.lambda_func_name)}-policy-${var.sns_topic_name}"
   role   = "${aws_iam_role.lambda_cloudwatch_logs.id}"
   policy = "${data.aws_iam_policy_document.lambda_cloudwatch_logs_policy.json}"
 }
@@ -170,7 +200,7 @@ data "aws_iam_policy_document" "lambda_cloudwatch_logs_policy" {
 resource "aws_cloudwatch_event_rule" "warmer" {
   count = "${var.create_warmer_event ? 1 : 0}"
 
-  name                = "sns_logger_warmer"
+  name                = "sns-logger-warmer-${var.sns_topic_name}"
   description         = "Keeps ${var.lambda_func_name} Warm"
   schedule_expression = "rate(15 minutes)"
 }

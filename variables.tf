@@ -58,7 +58,7 @@ variable lambda_func_name {
 
 variable lambda_description {
   type        = "string"
-  default     = "Route SNS messages to CloudWatch Logs"
+  default     = ""
   description = "Description to assign to Lambda Function."
 }
 
@@ -80,6 +80,12 @@ variable lambda_timeout {
 variable lambda_mem_size {
   default     = 128
   description = "Amount of RAM (in MB) assigned to the function. The default (and minimum) is 128MB, and the maximum is 3008MB."
+}
+
+variable lambda_runtime {
+  type        = "string"
+  default     = "python3.6"
+  description = "Lambda runtime to use for the function."
 }
 
 variable "lambda_tags" {
