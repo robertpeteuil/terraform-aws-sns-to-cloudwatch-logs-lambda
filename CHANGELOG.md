@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2019-04-12
+
+- constrain AWS provider to versions >= 2.0
+  - necessary due to [attribute values swap](https://www.terraform.io/docs/providers/aws/guides/version-2-upgrade.html#arn-and-layer_arn-attribute-value-swap) in versiions >= 2.0
+
 ## [1.0.0] - 2019-03-30
 
 - Moved all Python dependencies to Lambda Layers
@@ -62,6 +67,7 @@ Adjust outputs
 
 Initial Release
 
+[1.0.1]: https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda/compare/0.2.6...1.0.0
 [0.2.6]: https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda/compare/0.2.5...0.2.6
 [0.2.5]: https://github.com/robertpeteuil/terraform-aws-sns-to-cloudwatch-logs-lambda/compare/0.2.4...0.2.5
