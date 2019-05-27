@@ -35,7 +35,8 @@ This Lambda Function forwards subject & body of SNS messages to CloudWatch Log G
 ``` ruby
 module "sns_logger" {
   source            = "robertpeteuil/sns-to-cloudwatch-logs-lambda/aws"
-  version           = "1.0.1"
+  version           = "2.0.0"     # HCL2 support for Terraform >= 0.12
+  # version           = "1.0.1"   # Latest version for Terraform < 0.12
 
   aws_region        = "us-west-2"
   sns_topic_name    = "projectx-logging"
