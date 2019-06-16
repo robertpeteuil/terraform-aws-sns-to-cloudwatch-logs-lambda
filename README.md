@@ -4,6 +4,9 @@
 
 `terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function which routes SNS messages to CloudWatch Logs
 
+- For Terraform versions > = 0.12, use module `version >= "2.0.0"`
+- for Terraform versions < 0.12, use module `version = "1.0.1"`
+
 ## Terraform Module Features
 
 This Module allows simple and rapid deployment
