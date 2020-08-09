@@ -22,8 +22,11 @@ This Module allows simple and rapid deployment
 - Optionally create custom Lambda Layer zip using [build-lambda-layer-python](https://github.com/robertpeteuil/build-lambda-layer-python)
   - Enables adding/changing dependencies
   - Enables compiling for different version of Python
-- New behavior in `3.0.0` - inherits `region` from calling module's AWS Provider for resource creation/discovery.
+- New behavior in `3.0.0` in preperation for Terraform 0.13
+  - inherits `region` from calling module's AWS Provider for resource creation/discovery.
   - Deploy to alternate regions via provider aliases and [expicit provider passing](https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly)
+- This is driven by new recommendations for [Provider Configurations in Modules with 0.13](https://github.com/hashicorp/terraform/blob/master/website/docs/configuration/modules.html.md#providers-within-modules)
+  - Specifically [Legacy Modules with Provider Provisions](https://github.com/hashicorp/terraform/blob/master/website/docs/configuration/modules.html.md#legacy-shared-modules-with-provider-configurations) 
 
 ## SNS to CloudWatch Logs Features
 
