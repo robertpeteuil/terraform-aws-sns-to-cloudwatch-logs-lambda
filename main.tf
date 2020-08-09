@@ -3,12 +3,10 @@
 # -----------------------------------------------------------------
 
 terraform {
-  required_version = ">= 0.12"
-}
-
-provider "aws" {
-  region  = var.aws_region
-  version = ">= 2.12"
+  required_version = ">= 0.12.4"
+  required_providers {
+    aws = ">= 2.12"
+  }
 }
 
 # -----------------------------------------------------------------
@@ -217,10 +215,12 @@ JSON
 # -----------------------------------------------------------------
 
 resource "aws_lambda_permission" "warmer_multi" {
-  statement_id = "AllowExecutionFromCloudWatch"
-  action = "lambda:InvokeFunction"
+  count = var.create_warmer_event ? 1 : 0
+
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.sns_cloudwatchlog.function_name
-  principal = "events.amazonaws.com"
-  source_arn = aws_cloudwatch_event_rule.warmer[0].arn
-  qualifier = var.lambda_publish_func ? aws_lambda_function.sns_cloudwatchlog.version : null
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.warmer[0].arn
+  qualifier     = var.lambda_publish_func ? aws_lambda_function.sns_cloudwatchlog.version : null
 }

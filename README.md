@@ -4,8 +4,9 @@
 
 `terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function which routes SNS messages to CloudWatch Logs
 
-- For Terraform versions > = 0.12, use module `version >= "2.0.0"`
-- for Terraform versions < 0.12, use module `version = "1.0.1"`
+- Terraform versions >= 0.12, use module `version >= "3.0.0"`
+  - If using `var.aws_region` to specify deployment region use `version = "2.0.1"` or switch to provider aliases and explicit provider passing
+- Terraform versions <= 0.11, use module `version = "1.0.1"`
 
 ## Terraform Module Features
 
@@ -21,6 +22,8 @@ This Module allows simple and rapid deployment
 - Optionally create custom Lambda Layer zip using [build-lambda-layer-python](https://github.com/robertpeteuil/build-lambda-layer-python)
   - Enables adding/changing dependencies
   - Enables compiling for different version of Python
+- New behavior in `3.0.0` - inherits `region` from calling module's AWS Provider for resource creation/discovery.
+  - Deploy to alternate regions via provider aliases and [expicit provider passing](https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly)
 
 ## SNS to CloudWatch Logs Features
 
@@ -38,10 +41,11 @@ This Lambda Function forwards subject & body of SNS messages to CloudWatch Log G
 ``` ruby
 module "sns_logger" {
   source            = "robertpeteuil/sns-to-cloudwatch-logs-lambda/aws"
-  version           = "2.0.0"     # HCL2 support for Terraform >= 0.12
-  # version           = "1.0.1"   # Latest version for Terraform < 0.12
+  version           = "3.0.0"     # Use with Terraform >= 0.13
+  # version           = "2.0.1"   # Use with Terraform ~ 0.12.x
+  #   last version with var.aws_region and provider in module
+  # version           = "1.0.1"   # Latest version for Terraform <= 0.11
 
-  aws_region        = "us-west-2"
   sns_topic_name    = "projectx-logging"
   log_group_name    = "projectx"
   log_stream_name   = "script-logs"
@@ -54,7 +58,6 @@ module "sns_logger" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| aws_region | Region where AWS resources are located | string | - | yes |
 | sns_topic_name | Name of SNS Topic to be logged by Gateway | string | - | yes |
 | log_group_name | Name of CloudWatch Log Group | string | - | yes |
 | log_stream_name | Name of CloudWatch Log Stream | string | - | yes |

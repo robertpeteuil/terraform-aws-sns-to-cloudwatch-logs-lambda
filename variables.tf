@@ -2,11 +2,6 @@
 # REQUIRED VARIABLES WITHOUT DEFAULT VALUES
 # -----------------------------------------------------------------
 
-variable "aws_region" {
-  type        = string
-  description = "Region where AWS resources will be created."
-}
-
 variable "sns_topic_name" {
   type        = string
   description = "Name of SNS Topic logging to CloudWatch Log."

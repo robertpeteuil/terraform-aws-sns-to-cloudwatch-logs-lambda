@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2020-08-08
+
+- fix errors that could occur if `create_warmer_event` set to `false`
+
+Breaking Change
+
+- remove `provider` block from `main.tf` as this improves Terraform 0.13 compatibility
+  - removed `var.aws_region`, since is no longer needed without provider block
+  - add `required_providers` to set min version of aws provider
+
+## [2.0.1] - 2019-06-19
+
+- add Terraform 0.11/0.12 version compatibility info to README.md
+
 ## [2.0.0] - 2019-05-27
 
 - update for HCL2 in Terraform versions > 0.12
@@ -12,7 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 ## [1.0.1] - 2019-04-12
 
 - constrain AWS provider to versions >= 2.0
-  - necessary due to [attribute values swap](https://www.terraform.io/docs/providers/aws/guides/version-2-upgrade.html#arn-and-layer_arn-attribute-value-swap) in versiions >= 2.0
+  - necessary due to [attribute values swap](https://www.terraform.io/docs/providers/aws/guides/version-2-upgrade.html#arn-and-layer_arn-attribute-value-swap) in versions >= 2.0
 
 ## [1.0.0] - 2019-03-30
 

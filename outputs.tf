@@ -64,6 +64,6 @@ output "log_stream_arn" {
 
 output "cloudwatch_event_rule_arn" {
   description = "ARN of CloudWatch Trigger Event created to prevent hibernation."
-  value       = aws_cloudwatch_event_rule.warmer[0].arn
+  value       = var.create_warmer_event ? aws_cloudwatch_event_rule.warmer[0].arn : ""
 }
 
