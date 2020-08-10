@@ -4,9 +4,10 @@
 
 `terraform-aws-sns-to-cloudwatch-logs-lambda` is a Terraform module to provision a Lambda Function which routes SNS messages to CloudWatch Logs
 
-- Terraform versions >= 0.12, use module `version >= "3.0.0"`
-  - If using `var.aws_region` to specify deployment region use `version = "2.0.1"` or switch to provider aliases and explicit provider passing
+- Terraform versions >= 0.12, use module `version >= "3.0.1"` (See exception)
 - Terraform versions <= 0.11, use module `version = "1.0.1"`
+
+> Exception: if using `var.aws_region` to specify deployment region, use `version = "2.0.1"`, until you can switch to provider aliases and [explicit provider passing](https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly).
 
 ## Terraform Module Features
 
@@ -22,11 +23,12 @@ This Module allows simple and rapid deployment
 - Optionally create custom Lambda Layer zip using [build-lambda-layer-python](https://github.com/robertpeteuil/build-lambda-layer-python)
   - Enables adding/changing dependencies
   - Enables compiling for different version of Python
-- New behavior in `3.0.0` in preperation for Terraform 0.13
-  - inherits `region` from calling module's AWS Provider for resource creation/discovery.
-  - Deploy to alternate regions via provider aliases and [expicit provider passing](https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly)
-- This is driven by new recommendations for [Provider Configurations in Modules with 0.13](https://github.com/hashicorp/terraform/blob/master/website/docs/configuration/modules.html.md#providers-within-modules)
-  - Specifically [Legacy Modules with Provider Provisions](https://github.com/hashicorp/terraform/blob/master/website/docs/configuration/modules.html.md#legacy-shared-modules-with-provider-configurations) 
+- **Breaking Changes** in `3.0.0` - required to enable new Terraform 0.13 module arguments `for_each`, `count`, and `depends_on`
+  - The module's internal AWS `provider` block has been removed
+  - `var.aws_region` has been removed and can't be used to set a target region
+  - By default, modules inherit the `region` of the calling module's Provider
+  - To specify alternate regions, use provider aliases and [expicit provider passing](https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly)
+  - Additional information can be found in the docs for [Provider Configurations in Modules with 0.13](https://github.com/hashicorp/terraform/blob/master/website/docs/configuration/modules.html.md#providers-within-modules)
 
 ## SNS to CloudWatch Logs Features
 
@@ -44,9 +46,7 @@ This Lambda Function forwards subject & body of SNS messages to CloudWatch Log G
 ``` ruby
 module "sns_logger" {
   source            = "robertpeteuil/sns-to-cloudwatch-logs-lambda/aws"
-  version           = "3.0.0"     # Use with Terraform >= 0.13
-  # version           = "2.0.1"   # Use with Terraform ~ 0.12.x
-  #   last version with var.aws_region and provider in module
+  version           = "3.0.1"     # Use with Terraform >= 0.12 (including 0.13)
   # version           = "1.0.1"   # Latest version for Terraform <= 0.11
 
   sns_topic_name    = "projectx-logging"

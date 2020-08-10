@@ -4,15 +4,25 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2020-08-08
+
+- Clarification on changes for Terraform 0.13
+
 ## [3.0.0] - 2020-08-08
 
-- fix errors that could occur if `create_warmer_event` set to `false`
+**Breaking Change**
 
-Breaking Change
+- removed `provider` block from module to enable Terraform 0.13 module features
+  - required to allow use of new modules arguments `for_each`, `count`, and `depends_on`
+  - `var.aws_region` removed as only used in provider block
 
-- remove `provider` block from `main.tf` as this improves Terraform 0.13 compatibility
-  - removed `var.aws_region`, since is no longer needed without provider block
-  - add `required_providers` to set min version of aws provider
+Enhancements
+
+- add `required_providers` section to `terraform` block, specifies min ver for aws provider
+
+Bug Fix
+
+- fix error that could occur if `create_warmer_event` set to `false`
 
 ## [2.0.1] - 2019-06-19
 
