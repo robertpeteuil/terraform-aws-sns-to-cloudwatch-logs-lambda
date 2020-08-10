@@ -28,7 +28,7 @@ This Module allows simple and rapid deployment
   - `var.aws_region` has been removed and can't be used to set a target region
   - By default, modules inherit the `region` of the calling module's Provider
   - To specify alternate regions, use provider aliases and [expicit provider passing](https://www.terraform.io/docs/configuration/modules.html#passing-providers-explicitly)
-  - Additional information can be found in the docs for [Provider Configurations in Modules with 0.13](https://github.com/hashicorp/terraform/blob/master/website/docs/configuration/modules.html.md#providers-within-modules)
+  - Additional information on module considerations can be found in the docs for [Provider Configuration in Modules with 0.13](https://www.terraform.io/docs/configuration/modules.html#legacy-shared-modules-with-provider-configurations)
 
 ## SNS to CloudWatch Logs Features
 
