@@ -77,7 +77,7 @@ module "sns_logger" {
 | lambda_description | Lambda Function Description | string | `Route SNS messages to CloudWatch Logs` | no |
 | lambda_tags | Mapping of Tags to assign to Lambda function | map | `{}` | no |
 | lambda_publish_func | Publish Lambda Function | string | `false` | no |
-| lambda_runtime | Lambda runtime for Function | string | `python3.6` | no |
+| lambda_runtime | Lambda runtime for Function | string | `python3.8` | no |
 | lambda_timeout | Function time-out (seconds) | string | `3` | no |
 | lambda_mem_size | Function RAM assigned (MB) | string | `128` | no |
 | create_warmer_event | Create CloudWatch trigger event to prevent hibernation | string | `false` | no |

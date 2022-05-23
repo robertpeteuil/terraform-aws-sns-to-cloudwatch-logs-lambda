@@ -79,7 +79,7 @@ variable "lambda_mem_size" {
 
 variable "lambda_runtime" {
   type        = string
-  default     = "python3.6"
+  default     = "python3.8"
   description = "Lambda runtime to use for the function."
 }
 
