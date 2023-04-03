@@ -9,6 +9,10 @@ terraform {
   }
 }
 
+locals {
+  lambda_prefix_name = "lambda-${lower(var.lambda_func_name)}"
+}
+
 # -----------------------------------------------------------------
 # CREATE LAMBDA BASE LAYER CONTAINING PYTHON LIBRARIES
 # -----------------------------------------------------------------
@@ -42,7 +46,7 @@ locals {
 resource "aws_lambda_function" "sns_cloudwatchlog" {
   layers = [aws_lambda_layer_version.logging_base.arn]
 
-  function_name = "${var.lambda_func_name}-${var.sns_topic_name}"
+  function_name = var.lambda_func_name
   description   = length(var.lambda_description) > 0 ? var.lambda_description : local.dynamic_description
 
   filename         = "${path.module}/lambda.zip"
@@ -143,13 +147,13 @@ resource "aws_lambda_permission" "sns_cloudwatchlog_multi" {
 
 # Create IAM role
 resource "aws_iam_role" "lambda_cloudwatch_logs" {
-  name               = "lambda-${lower(var.lambda_func_name)}-${var.sns_topic_name}"
+  name               = local.lambda_prefix_name
   assume_role_policy = data.aws_iam_policy_document.lambda_cloudwatch_logs.json
 }
 
 # Add base Lambda Execution policy
 resource "aws_iam_role_policy" "lambda_cloudwatch_logs_polcy" {
-  name   = "lambda-${lower(var.lambda_func_name)}-policy-${var.sns_topic_name}"
+  name   = local.lambda_prefix_name
   role   = aws_iam_role.lambda_cloudwatch_logs.id
   policy = data.aws_iam_policy_document.lambda_cloudwatch_logs_policy.json
 }
